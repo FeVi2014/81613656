@@ -1,15 +1,15 @@
-﻿package br.usjt.arqsw.entity;
+package br.usjt.arqsw.entity;
 
 import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;/***
+import javax.validation.constraints.Size;
+/***
  * 
  * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
  */
-
 @Entity
 public class Fila implements Serializable{
 	/**

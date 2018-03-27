@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.usjt.arqsw.dao.FilaDAO;
-import br.usjt.arqsw.entity.Fila;/***
+import br.usjt.arqsw.entity.Fila;
+
+/***
  * 
  * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
  */
-
 
 @Service
 public class FilaService {
@@ -28,8 +29,7 @@ public class FilaService {
 	
 	
 	public Fila carregar(int id) throws IOException{
-		// TODO 4.3. Complete o método carregar(int id) da classe FilaService 
-		//que deve retornar um objeto fila com o nome e o id.
+
 		Fila fila = dao.Carregar(id);
 		
 		return fila;

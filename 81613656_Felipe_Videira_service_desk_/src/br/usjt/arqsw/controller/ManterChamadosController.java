@@ -23,8 +23,6 @@ import br.usjt.arqsw.service.FilaService;
  * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
  */
 
-
-
 @Controller
 public class ManterChamadosController {
 	

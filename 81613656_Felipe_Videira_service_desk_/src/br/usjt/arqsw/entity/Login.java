@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
  * 
  * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
  */
-
 @Entity
 public class Login implements Serializable{
 

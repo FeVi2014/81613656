@@ -5,11 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import br.usjt.arqsw.entity.Login;
 /***
  * 
  * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
  */
+import br.usjt.arqsw.entity.Login;
+
     public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
       
     @Override

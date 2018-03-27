@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.usjt.arqsw.entity.Login;
+
 /***
  * 
  * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
  */
-
+ 
 @Repository
 public class LoginDAO {
 	private Connection conn;

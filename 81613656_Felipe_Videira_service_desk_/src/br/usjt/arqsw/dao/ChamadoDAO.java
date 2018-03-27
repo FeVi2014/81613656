@@ -20,6 +20,7 @@ import br.usjt.arqsw.entity.Fila;
  * 
  * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
  */
+
 @Repository
 public class ChamadoDAO {
 	

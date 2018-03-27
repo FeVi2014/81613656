@@ -11,7 +11,6 @@ import java.sql.SQLException;
  * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
  */
 
-
 public class ConnectionFactory {
 	static {
 		try {
