@@ -33,8 +33,9 @@ public class ManterChamadosRestController {
 		return null;
 	}
 	
+	@Transactional
 	@RequestMapping(method=RequestMethod.POST, value="rest/chamados")
-	public @ResponseEntity<Chamado> inserirChamado(@ResquestBody Chamado chamado) {
+	public @ResponseEntity<Chamado> inserirChama  do(@ResquestBody Chamado chamado) {
 		try {
 			int id = cService.novoChamado(chamado);
 			chamado.setNumero(id);

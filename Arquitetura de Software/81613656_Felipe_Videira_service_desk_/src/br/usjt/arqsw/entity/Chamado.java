@@ -1,81 +1,107 @@
 package br.usjt.arqsw.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-/***
- * 
- * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
- */
 @Entity
-public class Chamado implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Chamado {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_chamado")
+	private int numero;
+	
+	@JsonFormat(pattern="dd-MM-yyyy")
+	@NotNull
+	@Column(name="dt_abertura")
+	private Date dataAbertura;
+	
+	@JsonFormat(pattern="dd-MM-yyyy")
+	@Column(name="dt_fechamento")
+	private Date dataFechamento;
+	
+	@NotNull
+	private String status;
+	
+	@NotNull 
+	@Size(max=100,min=10, message="O tamanho da descrição deve estar entre 10 e 100 caracteres")
+	private String descricao;
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="id_fila")
+	private Fila fila;
+	
 	
 	public static final String ABERTO = "aberto";
 	public static final String FECHADO = "fechado";
 	
-	private int id;   
-	
-	@NotNull(message="A Descrição nÃ£o pode ser vazia")	
-	private String Descricao;  
-	
-	private String Status;    
-	private Date DT_ABERTURA; 	
-	private Date DT_FECHAMENTO;   
-	private Fila fila;
-	
-	public int getId() {
-		return id;
+	public int getNumero() {
+		return numero;
 	}
-
-	public void setId(int id) {
-		this.id = id;
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
-	
-	public String getDescricao() {
-		return Descricao;
+	public Date getDataAbertura() {
+		return dataAbertura;
 	}
-
-	public void setDescricao(String descricao) {
-		Descricao = descricao;
+	public void setDataAbertura(Date dataAbertura) {
+		this.dataAbertura = dataAbertura;
 	}
-
+	public Date getDataFechamento() {
+		return dataFechamento;
+	}
+	public void setDataFechamento(Date dataFechamento) {
+		this.dataFechamento = dataFechamento;
+	}
 	public String getStatus() {
-		return Status;
+		return status;
 	}
-
 	public void setStatus(String status) {
-		Status = status;
+		this.status = status;
 	}
-
-	public Date getDT_ABERTURA() {
-		return DT_ABERTURA;
-	}
-
-	public void setDT_ABERTURA(Date dT_ABERTURA) {
-		DT_ABERTURA = dT_ABERTURA;
-	}
-
-	public Date getDT_FECHAMENTO() {
-		return DT_FECHAMENTO;
-	}
-
-	public void setDT_FECHAMENTO(Date dT_FECHAMENTO) {
-		DT_FECHAMENTO = dT_FECHAMENTO;
-	}
-
 	public Fila getFila() {
 		return fila;
 	}
-
 	public void setFila(Fila fila) {
 		this.fila = fila;
 	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	public int getTempoDias(){
+		//getTime e currentTimeMillis retornam o tempo em milisegundos
+		//dividir por 1000 * 60 * 60 * 24 converte para dias
+		int dias;
+		if(dataFechamento == null){
+			//considera o momento atual para calcular o tempo aberto
+			dias =  (int)(System.currentTimeMillis() - dataAbertura.getTime())/(1000 * 60 * 60 * 24);
+		} else {
+			//considera a data de fechamento para calcular o tempo aberto
+			dias = (int)(dataFechamento.getTime() - dataAbertura.getTime())/(1000 * 60 * 60 * 24);
+		}
+		return dias;
+	}
+	
+	@Override
+	public String toString() {
+		return "Chamado [numero=" + numero + ", dataAbertura=" + dataAbertura
+				+ ", dataFechamento=" + dataFechamento + ", status=" + status
+				+ ", descricao=" + descricao + ", fila=" + fila + "]";
+	}
 
-	
-	
+
 }
