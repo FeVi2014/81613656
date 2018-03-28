@@ -22,6 +22,7 @@ public class ManterChamadosRestController {
 		 cService = cs;
 		 fService = fs;
 	}
+	
 	@RequestMapping(method=RequestMethod.GET, value="rest/chamados")
 	public List<Chamado> listarChamados() {
 		try {
@@ -32,4 +33,15 @@ public class ManterChamadosRestController {
 		return null;
 	}
 	
+	@RequestMapping(method=RequestMethod.POST, value="rest/chamados")
+	public @ResponseEntity<Chamado> inserirChamado(@ResquestBody Chamado chamado) {
+		try {
+			int id = cService.novoChamado(chamado);
+			chamado.setNumero(id);
+			return new ResponseEntity(chamado, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity(chamado, HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+	}
 }
