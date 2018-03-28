@@ -1,0 +1,29 @@
+.page-about {
+  background:  rgba(0, 0, 0, 1);
+  
+    .card-image {
+        height: 200px;
+        width: 200px;
+        margin: auto;
+        display: block;
+        align-items: center;
+      }
+
+      .card-title{
+        color: rgb(255, 136, 205);
+        font-weight:bold;
+      }
+
+      .card{
+        background: rgba(3, 20, 46, 0.733);
+        box-shadow:  inset 2px 5px 50px 0.5px;
+      }
+
+      p{
+        color: aqua;
+      }
+
+      .head{
+        background: rgb(58, 96, 153);
+      }
+}
