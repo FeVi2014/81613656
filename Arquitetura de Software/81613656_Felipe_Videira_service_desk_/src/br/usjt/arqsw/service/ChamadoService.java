@@ -1,8 +1,8 @@
 package br.usjt.arqsw.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,40 +11,29 @@ import br.usjt.arqsw.dao.ChamadoDAO;
 import br.usjt.arqsw.entity.Chamado;
 import br.usjt.arqsw.entity.Fila;
 
-/***
- * 
- * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
- */
-
 @Service
-public class ChamadoService {		
-	private ChamadoDAO dao;
-		
+public class ChamadoService {
+	ChamadoDAO dao;
+	
 	@Autowired
 	public ChamadoService(ChamadoDAO dao){
 		this.dao = dao;
 	}
 	
-	public int criarChamado(Chamado chamado) throws IOException{
-				
+	public int novoChamado(Chamado chamado) throws IOException{
+		chamado.setDataAbertura(new Date());
+		chamado.setDataFechamento(null);
 		chamado.setStatus(Chamado.ABERTO);
-		chamado.setDT_ABERTURA(new Date());
-		chamado.setDT_FECHAMENTO(null);
-
-		return dao.criarChamado(chamado);
+		return -1;
+		//return dao.inserirChamado(chamado);
 	}
 	
-	
-	public ArrayList<Chamado> listarChamados(Fila fila) throws IOException{
-		
-		ArrayList<Chamado> listaChamados = new ArrayList<>();								
-		listaChamados = dao.listarChamados(fila);			
-		return listaChamados;					 
-					
-	}
-	
+	public List<Chamado> listarChamados(Fila fila) throws IOException{
+		return dao.listarChamados(fila);
 	}
 
-	
-	
+	public List<Chamado> listarChamados() throws IOException{
+		return dao.listarChamados();
+	}
 
+}

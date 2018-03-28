@@ -1,104 +1,71 @@
 package br.usjt.arqsw.dao;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.usjt.arqsw.entity.Chamado;
 import br.usjt.arqsw.entity.Fila;
-
-/***
- * 
- * @author 81613656 Felipe Videira SIN3AN-MCA | USJT MOOCA
- */
-
 @Repository
 public class ChamadoDAO {
+	@PersistenceContext
+	EntityManager manager;
 	
-	private Connection conn;
-	
-	@Autowired 
-	public ChamadoDAO(DataSource dataSource) throws IOException{
-		try {
-			this.conn = dataSource.getConnection();
-		} catch (SQLException e) {
-			throw new IOException(e);
-		}
+	public int inserirChamado(Chamado chamado) throws IOException {
+		manager.persist(chamado);
+		return chamado.getNumero();
 	}
 	
-	public int criarChamado(Chamado chamado) throws IOException {
-		int id = -1;
-		String sql = "INSERT INTO chamado (descricao, status, dt_abertura, id_fila) VALUES (?,?,?,?)";
-		String sql1 = "SELECT LAST_INSERT_ID()";
-		try(PreparedStatement stmt = conn.prepareStatement(sql);){
-			stmt.setString(1, chamado.getDescricao());
-			stmt.setString(2, chamado.getStatus());			
-			stmt.setDate(3, new Date(chamado.getDT_ABERTURA().getTime()));
-			stmt.setInt(4, chamado.getFila().getId());
-			stmt.execute();
-			
-			try(PreparedStatement stm = conn.prepareStatement(sql1);
-					ResultSet rs = stm.executeQuery();){
-				rs.next();
-				id = rs.getInt(1);
-			}catch(SQLException e1){
-				throw new IOException(e1);				
-			}
-			
-		}catch(SQLException e){
-			throw new IOException(e);
-		}
+	@SuppressWarnings("unchecked")
+	public List<Chamado> listarChamadosAbertos(Fila fila) throws IOException{
+		//conectei minha fila com a persistencia
+		fila = manager.find(Fila.class, fila.getId());
 		
-		return id;
-	}
-	
+		String jpql = "select c from Chamado c where c.fila = :fila and c.status = :status";
 		
-	public ArrayList<Chamado> listarChamados(Fila fila) throws IOException{
-		
-		String sqlSelect = "select * from chamado WHERE chamado.ID_FILA = ?";		
-		ArrayList<Chamado> lista = new ArrayList<>();
-		
-		try (   PreparedStatement pst = conn.prepareStatement(sqlSelect);) {
-				pst.setInt(1, fila.getId());
-			
-			try (ResultSet rs = pst.executeQuery();) {
-				
-				while(rs.next()) {
-									
-				Chamado chamado = new Chamado();
-				chamado.setId(1);
-				chamado.setStatus(rs.getString("STATUS"));
-				chamado.setDescricao(rs.getString("DESCRICAO"));
-				chamado.setDT_ABERTURA(rs.getDate("DT_ABERTURA"));
-				chamado.setDT_FECHAMENTO(rs.getDate("DT_FECHAMENTO"));
-				
-				int id_fila = rs.getInt("ID_FILA");
-				fila.setId(id_fila);
-				chamado.setFila(fila);
-								
-				lista.add(chamado);
-									
-				}
+		Query query = manager.createQuery(jpql);
+		query.setParameter("fila", fila);
+		query.setParameter("status", Chamado.ABERTO);
 
-			} catch (SQLException e) {
-				throw new IOException(e);
-			}
-		} catch (SQLException e1) {
-			System.out.print(e1.getStackTrace());
-		}
+		List<Chamado> result = query.getResultList();
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Chamado> listarChamados(Fila fila) throws IOException{
+		//conectei minha fila com a persistencia
+				fila = manager.find(Fila.class, fila.getId());
+				
+				String jpql = "select c from Chamado c where c.fila = :fila";
+				
+				Query query = manager.createQuery(jpql);
+				query.setParameter("fila", fila);
+
+				List<Chamado> result = query.getResultList();
+				return result;
+	}
+
+	public void fecharChamados(ArrayList<Integer> lista) throws IOException{
 		
-		return lista;
+			for(int id:lista){
+				Chamado chamado = manager.find(Chamado.class, id);
+				chamado.setDataFechamento(new java.util.Date());
+				chamado.setStatus(Chamado.FECHADO);
+				manager.merge(chamado);
+			}
 		
 	}
-		
+
+	@SuppressWarnings("unchecked")
+	public List<Chamado> listarChamados() {
+		return manager.createQuery("select c from Chamado c").getResultList();
+	}
+
 
 }
