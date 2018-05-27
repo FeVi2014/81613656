@@ -5,9 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+
 /**
  * 
- *  @author Felipe Videira 81613656 SIN3AM-MCA
+ * @author Felipe Videira 81613656 SI3AN-MCA1
  */
 public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 	@Override
@@ -16,7 +17,7 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 		
         String uri = request.getRequestURI();
 		if (uri.endsWith("loginForm") || uri.contains("css") || uri.contains("js")
-				|| uri.contains("img") || uri.contains("index") || uri.contains("tela_principal") || uri.contains("rest/chamados")) {
+				|| uri.contains("img") ||  uri.contains("index") || uri.contains("tela_principal")) {
 			return true;
 		}
 		if (request.getSession().getAttribute("UsuarioLogado") != null) {

@@ -8,9 +8,10 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import br.usjt.arqsw.entity.Fila;
+
 /**
  * 
- *  @author Felipe Videira 81613656 SIN3AM-MCA
+ * @author Felipe Videira 81613656 SI3AN-MCA1
  */
 
 @Repository
@@ -42,6 +43,10 @@ public class FilaDAO {
 	
 	
 	public void cadastrarChamado(Fila fila){
+		manager.persist(fila);
+	}
+	
+	public void criarFila(Fila fila){
 		manager.persist(fila);
 	}
 }

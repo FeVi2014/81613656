@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import br.usjt.arqsw.dao.UsuarioDAO;
 import br.usjt.arqsw.entity.Usuario;
+
 /**
  * 
- *  @author Felipe Videira 81613656 SIN3AM-MCA
+ * @author Felipe Videira 81613656 SI3AN-MCA1
  */
 
 @Service

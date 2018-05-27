@@ -3,7 +3,7 @@ package br.usjt.arqsw.dao;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -11,10 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import br.usjt.arqsw.entity.Chamado;
 import br.usjt.arqsw.entity.Fila;
+
 /**
  * 
- *  @author Felipe Videira 81613656 SIN3AM-MCA
+ * @author Felipe Videira 81613656 SI3AN-MCA1
  */
+
 @Repository
 public class ChamadoDAO {
 	@PersistenceContext
@@ -22,7 +24,7 @@ public class ChamadoDAO {
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<Chamado> listarChamados() throws IOException{
+	public List<Chamado> listarChamados(){
 		return manager.createQuery("select c from Chamado c").getResultList();
 	}
 
@@ -52,6 +54,13 @@ public class ChamadoDAO {
 		manager.persist(chamado);
 	}
 	
+	
+	public int novoChamado(Chamado chamado){
+		manager.persist(chamado);
+		return 1;
+	}
+	
+	
 	public void fecharChamados(ArrayList<Integer> lista) throws IOException{
 		for (int id:lista) {
 			Chamado chamado = manager.find(Chamado.class, id);
@@ -60,4 +69,21 @@ public class ChamadoDAO {
 			manager.merge(chamado);
 		}
 	}
+	
+	public List<Chamado> listarChamadosAbertos(Fila fila) throws IOException{
+		//conectei minha fila com a persistencia
+		fila = manager.find(Fila.class, fila.getId());
+		
+		String jpql = "select c from Chamado c where c.fila = :fila and c.status = :status";
+		
+		Query query = manager.createQuery(jpql);
+		query.setParameter("fila", fila);
+		query.setParameter("status", Chamado.ABERTO);
+
+		List<Chamado> result = query.getResultList();
+		return result;
+	}
+	
+
+	
 }

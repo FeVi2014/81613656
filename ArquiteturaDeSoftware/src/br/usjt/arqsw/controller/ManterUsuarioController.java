@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.usjt.arqsw.entity.Usuario;
 import br.usjt.arqsw.service.UsuarioService;
+
+
 /**
  * 
- *  @author Felipe Videira 81613656 SIN3AM-MCA
+ * @author Felipe Videira 81613656 SI3AN-MCA1
  */
 @Controller
 public class ManterUsuarioController {

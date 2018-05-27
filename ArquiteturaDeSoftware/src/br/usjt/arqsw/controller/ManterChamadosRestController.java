@@ -2,14 +2,20 @@ package br.usjt.arqsw.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,14 +24,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.usjt.arqsw.entity.Chamado;
+import br.usjt.arqsw.entity.Fila;
 import br.usjt.arqsw.service.ChamadoService;
 import br.usjt.arqsw.service.FilaService;
 
+
 /**
  * 
- *  @author Felipe Videira 81613656 SIN3AM-MCA
+ * @author Felipe Videira 81613656 SI3AN-MCA1
  */
-
 @RestController
 public class ManterChamadosRestController {
 	private ChamadoService cService;
@@ -63,29 +70,6 @@ public class ManterChamadosRestController {
 			}
 		}
 		
-	@RequestMapping(value="/fechar_chamados")
-	public String fecharChamados( 
-			@RequestParam Map<String, String> allRequestParams) {
-		try {
-			Set<String> chaves = allRequestParams.keySet();
-			Iterator<String> i = chaves.iterator();
-			ArrayList<Integer> lista = new ArrayList<>();
-			while(i.hasNext()) {
-				String chave = i.next();
-				String valor = (String) allRequestParams.get(chave);
-				if(valor.equals("on")) {
-					lista.add(Integer.parseInt(chave));	
-				}
-			}
-			if(lista.size()>0) {
-				cService.fecharChamados(lista);
-			}
-		}
-		catch(Exception ex) {
-			
-		}
-		return null;
-	}
-		
+	
 	}
 

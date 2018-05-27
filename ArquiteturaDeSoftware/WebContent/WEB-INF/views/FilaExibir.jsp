@@ -1,4 +1,5 @@
  <!--8Felipe Videira 81613656 SI3AN-MCA1 -->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -23,17 +24,14 @@
     
     <!-- Container Principal -->
     <div id="main" class="container">
-       <h3 class="page-header">Chamado(s) da Fila ${fila.nome}</h3>
+       <h3 class="page-header">Filas:</h3>
         <c:if test="${not empty chamados}">
             <div class="table-responsive col-md-12">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>N�mero</th>
-                            <th>Descri��o</th>
-                            <th>Abertura</th>
-                            <th>Fechamento</th>
-                            <th>Status</th>
+                            <th>Id</th>
+                            <th>Nome</th>
                            
                         </tr>
                     </thead>
