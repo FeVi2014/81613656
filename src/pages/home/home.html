@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="danger">
+    <ion-title>
+     Chamado
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="cor">
+    <ion-card>
+
+        <ion-card-header>
+          Insira um Novo Chamado
+        </ion-card-header>
+
+        <ion-card-content>
+<ion-item>
+<ion-input [(ngModel)] = "inputChamado" placeholder="Digite o novo chamado"> </ion-input>
+</ion-item>
+
+<button ion-button full color="danger" (click)="saveChamado()">Salvar</button>
+<button ion-button full color="danger" (click)="loadChamado()">Verificar o último chamado inserido</button>
+
+</ion-card-content>
+</ion-card>
+</ion-content>
